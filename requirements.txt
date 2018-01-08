@@ -1,0 +1,3 @@
+--index-url https://pypi.duolingo.com/pypi
+
+Flask==0.10.1
