@@ -3,7 +3,6 @@ import { connect } from 'react-redux';
 
 import { loadPage } from 'actions'
 
-import Word from 'components/Word'
 import Sentence from 'components/sentence'
 
 // Properties

@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux';
 
 import ReaderBody from 'components/ReaderBody'
+import Input from 'components/Input'
 
 // Properties
 
@@ -13,7 +14,11 @@ class Reader extends Component {
 
   render() {
     return (
-      <ReaderBody/>
+      <div>
+        <p></p>
+        <Input/>
+        <ReaderBody/>
+      </div>
     )
   }
 }

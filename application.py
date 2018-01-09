@@ -1,4 +1,4 @@
-from flask import Flask, render_template, jsonify
+from flask import Flask, render_template, jsonify, request
 
 application = Flask(__name__)
 
@@ -9,8 +9,19 @@ def index():
 
 
 @application.route('/api/post_text', methods=['POST'])
-def post_text(text):
-    return
+def post_text():
+    body = request.get_json(force=True)
+
+    language = body.get('language')
+    text = body.get('text')
+    return jsonify(
+        {
+            'results': [[
+                {'text': language, 'arcs': []},
+                {'text': text, 'arcs': []}
+            ]]
+        }
+    )
 
 
 @application.route('/api/load_text', methods=['GET'])

@@ -8,4 +8,10 @@ const api = axios.create({
 });
 
 export const loadText = () =>
-    api.get('/load_text');
+  api.get('/load_text');
+
+export const postText = (text, language) =>
+  api.post('/post_text', {
+    text: text,
+    language: language
+  });

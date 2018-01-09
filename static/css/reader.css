@@ -1,3 +1,5 @@
+/* Fonts */
+
 @font-face {
     font-family: museosansrounded;
     src: url(https://d7mj4aqfscim2.cloudfront.net/proxy/fonts/museo/museosansrounded-300-webfont.woff);
@@ -14,6 +16,8 @@
     font-family: museosansrounded;
 }
 
+/* Word Types */
+
 .main {
     color: #7AC70C;
     font-weight: bold;
@@ -26,5 +30,20 @@
 
 .obj {
     color: #1CB0F6
+}
+
+/* Input box */
+
+.text-input {
+    height: 50px;
+    border-radius: 8px;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    border: 2px solid #cfcfcf;
+}
+
+.text-input:focus {
+    border-color: #1CB0F6;
+    outline: none;
 }
 

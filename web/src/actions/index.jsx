@@ -15,6 +15,21 @@ export function loadPage() {
   }
 }
 
+export function postText(text, language) {
+  return function (dispatch) {
+    api
+      .postText(text, language)
+      .then(response => {
+        dispatch(
+          {
+            type: "LOAD_PAGE",
+            wordJson: response.data
+          }
+        )
+      })
+  }
+}
+
 export function clickWord(wordIndex, sentenceIndex) {
   return {
     type: "CLICK_WORD",
