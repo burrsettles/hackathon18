@@ -1,37 +1,45 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux';
 
-import clickWord from 'actions'
+import { loadPage } from 'actions'
+
+import Word from 'components/Word'
 
 // Properties
 
 const mapStateToProps = (state, ownProps) => {
   return {
-    bodyText: state.bodyText,
+    words: state.words,
   };
 };
 
 const mapDispatchToProps = dispatch => ({
-  onClickWord: () => dispatch(clickWord())
+  onloadPage: () => dispatch(loadPage())
 });
 
 class ReaderBody extends Component {
 
   constructor(props) {
     super(props)
-    this.onClickWord = this.onClickWord.bind(this)
   }
 
-  onClickWord() {
-    this.props.onClickWord()
+  componentDidMount() {
+    this.props.onloadPage()
   }
 
   render() {
+    const wordComponents = this.props.words.map(word =>
+      <span>
+        <Word wordText={word.text}
+              wordType={word.wordType}
+              edges={word.edges}
+        />{'\u00A0'}
+      </span>)
 
     return (
-      <button onClick={() => this.onClickWord() }>
-        {this.props.bodyText}
-      </button>
+      <h3>
+        {wordComponents}
+      </h3>
     )
 
   }

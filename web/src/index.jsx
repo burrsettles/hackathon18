@@ -5,7 +5,7 @@ import { createStore, applyMiddleware } from 'redux';
 import thunk from 'redux-thunk'
 
 import routes from 'routes';
-import reader from 'reducers';
+import reader from 'reducers/index';
 
 import { Router } from 'react-router';
 

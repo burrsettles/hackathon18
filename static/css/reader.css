@@ -1,0 +1,30 @@
+@font-face {
+    font-family: museosansrounded;
+    src: url(https://d7mj4aqfscim2.cloudfront.net/proxy/fonts/museo/museosansrounded-300-webfont.woff);
+}
+
+@font-face {
+    font-family: museosansrounded;
+    src: url(https://d7mj4aqfscim2.cloudfront.net/proxy/fonts/museo/museosansrounded-500-webfont.woff);
+    font-weight: bold;
+}
+
+
+.container {
+    font-family: museosansrounded;
+}
+
+.main {
+    color: #7AC70C;
+    font-weight: bold;
+    text-decoration: underline dotted;
+}
+
+.subj {
+    color: #FFB020
+}
+
+.obj {
+    color: #1CB0F6
+}
+
