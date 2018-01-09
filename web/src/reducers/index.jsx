@@ -1,48 +1,54 @@
 const initialState = {
-  words: []
+  sentences: []
 };
+
+function parseSentence (sentence) {
+  sentence = sentence.map((word, index) => {
+    return {
+      text: word.text,
+      index: index,
+      pos: word.pos,
+      wordType: word.arcs.length > 0 ? 'MAIN' : null,
+      edges: word.arcs}
+  });
+  console.log(sentence)
+  return sentence
+}
 
 export default (state=initialState, action) => {
   switch (action.type) {
     case "LOAD_PAGE":
       if (action.wordJson) {
-          var words = action.wordJson['tokens'].map((word, index) => {
-            return {
-              text: word,
-              index: index,
-              edges: []}
-          });
-
-          action.wordJson['dependencies'].forEach(dependency => {
-            var rootWord = words[dependency['toToken']];
-            rootWord['wordType'] = 'ROOT';
-            rootWord['edges'].push({
-              'toToken': dependency['toToken'],
-              'fromToken': dependency['fromToken'],
-              'edgeType': dependency['type']
-            });
-          });
-
-          return {
-            words: words
-          }
+        var sentences = []
+        action.wordJson['results'].forEach(sentence => {
+          sentences.push(parseSentence(sentence))
+        });
+        return {
+          sentences: sentences
         }
+      }
       else {
           return initialState
       }
       break;
     case "CLICK_WORD":
-      var words = state.words.map(word => {
-        if (word['wordType'] != 'ROOT') {
-          word['wordType'] = null;
+      var sentences = state.sentences
+      sentences.forEach(sentence => {
+        sentence.forEach(word => {
+          if (word['wordType'] != 'MAIN') {
+            word['wordType'] = null;
+          }
+        })
+      })
+      var sentence = sentences[action.sentenceIndex]
+      console.log(sentence)
+      sentence[action.wordIndex].edges.forEach(edge => {
+        for (var i = edge['span'][0]; i < edge['span'][1]; i++) {
+          sentence[i]['wordType'] = edge['type']
         }
-        return word
-      });
-      action.edges.forEach(edge => {
-        words[edge['fromToken']]['wordType'] = edge['edgeType']
       });
       return {
-        words: words
+        sentences: sentences
       };
     default: return initialState;
   }

@@ -4,12 +4,13 @@ import { connect } from 'react-redux';
 import { loadPage } from 'actions'
 
 import Word from 'components/Word'
+import Sentence from 'components/sentence'
 
 // Properties
 
 const mapStateToProps = (state, ownProps) => {
   return {
-    words: state.words,
+    sentences: state.sentences,
   };
 };
 
@@ -28,17 +29,17 @@ class ReaderBody extends Component {
   }
 
   render() {
-    const wordComponents = this.props.words.map(word =>
+    const sentenceComponents = this.props.sentences.map((sentence, index) =>
       <span>
-        <Word wordText={word.text}
-              wordType={word.wordType}
-              edges={word.edges}
-        />{'\u00A0'}
+        <Sentence
+              words={sentence}
+              index={index}
+        />
       </span>)
 
     return (
       <h3>
-        {wordComponents}
+        {sentenceComponents}
       </h3>
     )
 

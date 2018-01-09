@@ -15,9 +15,10 @@ export function loadPage() {
   }
 }
 
-export function clickWord(edges) {
+export function clickWord(wordIndex, sentenceIndex) {
   return {
     type: "CLICK_WORD",
-    edges: edges
+    wordIndex: wordIndex,
+    sentenceIndex: sentenceIndex
   }
 }

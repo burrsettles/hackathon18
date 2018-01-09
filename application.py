@@ -8,38 +8,78 @@ def index():
     return render_template('frontend.html')
 
 
-@application.route('/api/load_text')
+@application.route('/api/post_text', methods=['POST'])
+def post_text(text):
+    return
+
+
+@application.route('/api/load_text', methods=['GET'])
 def load_text():
     return jsonify(
         {
-            'tokens': ['Edward', 'gave', 'a', 'gift', 'to', 'Burr', '.',
-                       'The', 'movie', 'sucked', '.',
-                       ''],
-            'dependencies': [
-                {
-                    'type': "SUBJ",
-                    'fromToken': 0,
-                    'toToken': 1
-                },
-                {
-                    'type': "OBJ",
-                    'fromToken': 3,
-                    'toToken': 1
-                },
-                {
-                    'type': "OBJ",
-                    'fromToken': 5,
-                    'toToken': 1
-                },
-                {
-                    'type': "SUBJ",
-                    'fromToken': 8,
-                    'toToken': 9
-                }
-            ],
+            'results': [
+                [
+                    {
+                        'text': 'Edward',
+                        'arcs': []
+                    },
+                    {
+                        'text': 'gave',
+                        'arcs': [
+                            {
+                                'type': "SUBJ",
+                                'span': [0, 1]
+                            },
+                            {
+                                'type': "OBJ",
+                                'span': [3, 6]
+                            },
+                        ]
+                    },
+                    {
+                        'text': 'a',
+                        'arcs': []
+                    },
+                    {
+                        'text': 'gift',
+                        'arcs': []
+                    },
+                    {
+                        'text': 'to',
+                        'arcs': []
+                    },
+                    {
+                        'text': 'Burr',
+                        'arcs': []
+                    },
+                    {
+                        'text': '.',
+                        'arcs': []
+                    },
+                ],
+                [
+                    {
+                        'text': 'This',
+                        'arcs': []
+                    },
+                    {
+                        'text': 'movie',
+                        'arcs': []
+                    },
+                    {
+                        'text': 'sucked',
+                        'arcs': [
+                            {
+                                'type': "SUBJ",
+                                'span': [1, 2]
+                            },
+                        ]
+                    }
+                ],
+            ]
         }
     )
 
+
 if __name__ == '__main__':
     application.run(port=5000, debug=True)
-

@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { clickWord } from 'actions'
 
 const mapDispatchToProps = dispatch => ({
-  onClickWord: (edges) => dispatch(clickWord(edges))
+  onClickWord: (wordIndex, sentenceIndex) => dispatch(clickWord(wordIndex, sentenceIndex))
 });
 
 class Word extends Component {
@@ -15,12 +15,12 @@ class Word extends Component {
   }
 
   onClickWord() {
-    this.props.onClickWord(this.props.edges)
+    this.props.onClickWord(this.props.wordIndex, this.props.sentenceIndex)
   }
 
-  getClaseName(wordType) {
+  getClassName(wordType) {
     switch (wordType) {
-      case 'ROOT':
+      case 'MAIN':
         return 'main'
       case 'OBJ':
         return 'obj'
@@ -30,7 +30,7 @@ class Word extends Component {
   }
 
   render() {
-    var className = this.getClaseName(this.props.wordType)
+    var className = this.getClassName(this.props.wordType)
     return (
       <span className={className} onClick={() => this.onClickWord() }>
         {this.props.wordText}
