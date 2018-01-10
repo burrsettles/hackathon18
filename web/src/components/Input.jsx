@@ -16,22 +16,27 @@ class Input extends Component {
 
   constructor(props) {
     super(props)
-    this.handleInputKeyPress = this.handleInputKeyPress.bind(this)
+    this.handleGenerateClick = this.handleGenerateClick.bind(this)
     this.handleLanguageSelect = this.handleLanguageSelect.bind(this)
+    this.handleInputChange = this.handleInputChange.bind(this)
     this.state = {
-      language: 'en'
+      language: 'en',
+      inputText: ''
     }
   }
 
-  handleInputKeyPress(e) {
-    if (e.key === 'Enter') {
-      console.log(this.state)
-      this.props.onPostText(e.target.value, this.state.language)
-    }
+  handleGenerateClick(e) {
+    this.props.onPostText(this.state.inputText, this.state.language)
   }
+
+  handleInputChange(e) {
+    this.setState({
+      inputText: e.target.value
+    })
+  }
+
 
   handleLanguageSelect(event) {
-    console.log(event.target.value)
     this.setState({
       language: event.target.value
     })
@@ -40,18 +45,27 @@ class Input extends Component {
   render() {
     return (
       <div>
-        <div>
-          <select onChange={this.handleLanguageSelect}>
-            <option value="en">English</option>
-            <option value="fr">French</option>
-            <option value="es">Spanish</option>
-          </select>
-        </div>
-        <div>
-          <textarea
-            className='text-input'
-            type="text"
-            onKeyPress={this.handleInputKeyPress} />
+        <div id='input-holder'>
+          <div id='input-holder-inner'>
+            <h2> Enter Text </h2>
+            <div>
+              <textarea
+                className='text-input'
+                type="text"
+                onChange={this.handleInputChange}
+                />
+            </div>
+            <div>
+              <select id="language-select" onChange={this.handleLanguageSelect}>
+                <option value="en">English</option>
+                <option value="fr">French</option>
+                <option value="es">Spanish</option>
+              </select>
+              <button id="generate-button" onClick={this.handleGenerateClick}>
+                GENERATE
+              </button>
+            </div>
+          </div>
         </div>
       </div>
     )

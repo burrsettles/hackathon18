@@ -16,6 +16,12 @@
     font-family: museosansrounded;
 }
 
+/* Reader */
+
+.inFocus {
+    background-color: #ffffff;
+}
+
 /* Word Types */
 
 .main {
@@ -35,7 +41,8 @@
 /* Input box */
 
 .text-input {
-    height: 50px;
+    width: 100%;
+    height: 200px;
     border-radius: 8px;
     -webkit-appearance: none;
     -moz-appearance: none;
@@ -47,3 +54,42 @@
     outline: none;
 }
 
+#input-holder {
+    background-color: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 0 25px 0 rgba(0, 0, 0, .04)
+}
+
+#input-holder-inner {
+    padding-left: 100px;
+    padding-right: 100px;
+    padding-top: 10px;
+    padding-bottom: 50px;
+}
+
+
+#generate-button {
+    background-color: #7AC70C;
+    color: #ffffff;
+    border: 2px solid transparent;
+    border-radius: 100px;
+    display: inline-block;
+    font-weight: 700;
+    font-size: 15px;
+    line-height: 22px;
+    margin: 4px;
+    outline: none;
+    padding: 11px 35px;
+    text-align: center;
+    float: right;
+}
+
+/* Background*/
+
+html {
+    background-color: #F0F0F0
+}
+
+body {
+    background-color: #F0F0F0
+}

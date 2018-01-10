@@ -1,5 +1,6 @@
 const initialState = {
-  sentences: []
+  sentences: [],
+  sentenceInFocusIndex: null
 };
 
 function parseSentence (sentence) {
@@ -48,7 +49,8 @@ export default (state=initialState, action) => {
         }
       });
       return {
-        sentences: sentences
+        sentences: sentences,
+        sentenceInFocusIndex: action.sentenceIndex
       };
     default: return initialState;
   }
