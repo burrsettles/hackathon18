@@ -33,14 +33,14 @@ def main_verb(sent):
     for word in sent:
         if word.dep_ == 'ROOT' and word.pos_ in ['AUX', 'VERB']:
             return word.i
-        elif word.dep_ == 'cop' and word.head.dep_ == 'ROOT':
+        elif word.dep_ == 'cop' and (word.head.dep_ == 'ROOT' or word.head.head.dep_ == 'ROOT'):
             return word.i
     return None
 
 
 def subject(sent, main_verb_i):
     for word in sent:
-        if word.dep_ == 'nsubj' and word.head.dep_ == 'ROOT':
+        if word.dep_ == 'nsubj' and (word.head.dep_ == 'ROOT' or word.head.head.dep_ == 'ROOT'):
             # print('# SUBJ', word, word.i)
             return cleanup_span([word.left_edge.i, word.right_edge.i + 1], sent)
     return None
@@ -49,7 +49,10 @@ def subject(sent, main_verb_i):
 def objects(sent, main_verb_i):
     result = []
     for word in sent:
-        if word.dep_ in ('dobj', 'dative', 'attr') and word.head.i == main_verb_i:
+        if word.dep_ in ('dobj', 'obj', 'iobj', 'obl', 'dative', 'attr', 'acomp') and word.head.i == main_verb_i:
+            # print('# OBJ', word, word.i)
+            result.append(cleanup_span([word.left_edge.i, word.right_edge.i + 1], sent))
+        if word.dep_ in ('prep') and word.head.i == main_verb_i:
             # print('# OBJ', word, word.i)
             result.append(cleanup_span([word.left_edge.i, word.right_edge.i + 1], sent))
     if len(result) == 0:
@@ -76,7 +79,7 @@ def negations(sent, main_verb_i):
         if word.dep_ == 'neg' and word.head.i == main_verb_i:
             # print('# NEG', word, word.i)
             result.append([word.left_edge.i, word.right_edge.i + 1])
-        if word.dep_ == 'advmod' and word.text.lower() in ('no', 'ne', 'pas', 'rien', 'jamais'):
+        if word.dep_ == 'advmod' and word.text.lower() in ('no', 'ne', 'n\'', 'pas', 'rien', 'jamais'):
             # print('# NEG', word, word.i)
             result.append([word.i, word.i + 1])
     return result
@@ -123,7 +126,8 @@ def text2chunks(text, language):
         if comp_span is not None:
             argument_arcs.append({'type': 'COMP', 'span': comp_span})
             argument_arcs.append({'type': 'COMP_MAIN', 'span': comp_main})
-        sent_result['tokens'][main_verb_i]['arcs'] = argument_arcs
+        if main_verb_i:
+            sent_result['tokens'][main_verb_i]['arcs'] = argument_arcs
 
         result.append(sent_result)
 
