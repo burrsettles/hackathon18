@@ -33,15 +33,15 @@ def main_verb(sent):
     for word in sent:
         if word.dep_ == 'ROOT' and word.pos_ in ['AUX', 'VERB']:
             return word.i
-        elif word.dep_ == 'cop' and sent[word.head.i].dep_ == 'ROOT':
+        elif word.dep_ == 'cop' and word.head.dep_ == 'ROOT':
             return word.i
     return None
 
 
 def subject(sent, main_verb_i):
     for word in sent:
-        if word.dep_ == 'nsubj' and word.head.i == main_verb_i:
-            print('# SUBJ', word, word.i)
+        if word.dep_ == 'nsubj' and word.head.dep_ == 'ROOT':
+            # print('# SUBJ', word, word.i)
             return cleanup_span([word.left_edge.i, word.right_edge.i + 1], sent)
     return None
 
@@ -50,8 +50,14 @@ def objects(sent, main_verb_i):
     result = []
     for word in sent:
         if word.dep_ in ('dobj', 'dative', 'attr') and word.head.i == main_verb_i:
-            print('# OBJ', word, word.i)
+            # print('# OBJ', word, word.i)
             result.append(cleanup_span([word.left_edge.i, word.right_edge.i + 1], sent))
+    if len(result) == 0:
+        # copular cases for ES/FR
+        for word in sent:
+            if word.pos_ in ('NOUN', 'PRON', 'PROPN') and word.dep_ == 'ROOT':
+                # print('# OBJ', word, word.i)
+                result.append([word.i, word.i + 1])
     return result
 
 
@@ -59,7 +65,7 @@ def auxiliaries(sent, main_verb_i):
     result = []
     for word in sent:
         if word.dep_ == 'aux' and word.head.i == main_verb_i:
-            print('# AUX', word, word.i)
+            # print('# AUX', word, word.i)
             result.append([word.left_edge.i, word.right_edge.i + 1])
     return result
 
@@ -68,22 +74,25 @@ def negations(sent, main_verb_i):
     result = []
     for word in sent:
         if word.dep_ == 'neg' and word.head.i == main_verb_i:
-            print('# NEG', word, word.i)
+            # print('# NEG', word, word.i)
             result.append([word.left_edge.i, word.right_edge.i + 1])
+        if word.dep_ == 'advmod' and word.text.lower() in ('no', 'ne', 'pas', 'rien', 'jamais'):
+            # print('# NEG', word, word.i)
+            result.append([word.i, word.i + 1])
     return result
 
 
 def compliments(sent, main_verb_i):
     for word in sent:
         if word.dep_ in ('xcomp', 'ccomp') and word.head.i == main_verb_i:
-            print('# COMP', word, word.i)
+            # print('# COMP', word, word.i)
             return cleanup_span([word.left_edge.i, word.right_edge.i + 1], sent), [word.i, word.i+1]
     return None, None
 
 
 def text2chunks(text, language):
     nlp = spacy.load(MODELS[language])
-    print("Loaded model '%s'" % MODELS[language])
+    # print("Loaded model '%s'" % MODELS[language])
 
     doc = nlp(text)
     result = []
@@ -94,12 +103,12 @@ def text2chunks(text, language):
         # prepare the retun
         sent_result = {'tokens': []}
         for word in sent:
-            print(word.i, word.text_with_ws, word.pos_, word.head.i, word.dep_)
+            # print(word.i, word.text_with_ws, word.pos_, word.head.i, word.dep_)
             sent_result['tokens'].append({'text': word.text_with_ws})
 
         # create output JSON blob
         main_verb_i = main_verb(sent)
-        print('# MAIN VERB', sent[main_verb_i], main_verb_i)
+        # print('# MAIN VERB', sent[main_verb_i], main_verb_i)
         argument_arcs = []
         subject_span = subject(sent, main_verb_i)
         if subject_span is not None:
@@ -119,9 +128,10 @@ def text2chunks(text, language):
         result.append(sent_result)
 
         # delimiter candy.
-        print('')
+        # print('')
 
-    print(json.dumps({'results': result}))
+    return {'results': result}
+    # print(json.dumps({'results': result}))
 
 
 if __name__ == '__main__':
