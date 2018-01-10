@@ -37,9 +37,11 @@ class ReaderBody extends Component {
       </span>)
 
     return (
-      <h3>
-        {sentenceComponents}
-      </h3>
+      <div id="readerBody">
+        <p>
+          {sentenceComponents}
+        </p>
+      </div>
     )
 
   }

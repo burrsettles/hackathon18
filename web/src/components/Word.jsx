@@ -26,6 +26,14 @@ class Word extends Component {
         return 'obj'
       case 'SUBJ':
         return 'subj'
+      case 'AUX':
+        return 'aux'
+      case 'COMP':
+        return 'comp'
+      case 'COMP_MAIN':
+        return 'comp_main'
+      case 'NEG':
+        return 'neg'
     }
   }
 

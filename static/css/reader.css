@@ -22,12 +22,20 @@
     background-color: #ffffff;
 }
 
+#readerBody {
+    padding: 20px 100px;
+}
+
 /* Word Types */
 
 .main {
     color: #7AC70C;
     font-weight: bold;
     text-decoration: underline dotted;
+}
+
+p {
+    font-size: 24px;
 }
 
 .subj {

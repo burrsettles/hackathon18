@@ -14,7 +14,7 @@ const mapStateToProps = (state, ownProps) => {
 };
 
 const mapDispatchToProps = dispatch => ({
-  onMouseOver: (wordIndex, sentenceIndex) => dispatch(clickWord(wordIndex, sentenceIndex))
+  onMouseOver: (sentenceIndex) => dispatch(focusSentence(sentenceIndex))
 });
 
 class Sentence extends Component {
@@ -25,7 +25,7 @@ class Sentence extends Component {
 
   onMouseOver() {
     console.log("mouseover")
-    this.props.onMouseOver(0, this.props.index)
+    this.props.onMouseOver(this.props.index)
   }
 
   render() {
