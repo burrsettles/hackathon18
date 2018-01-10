@@ -37,3 +37,10 @@ export function clickWord(wordIndex, sentenceIndex) {
     sentenceIndex: sentenceIndex
   }
 }
+
+export function focusSentence(sentenceIndex) {
+  return {
+    type: "FOCUS_SENTENCE",
+    sentenceIndex: sentenceIndex
+  }
+}
