@@ -7,7 +7,7 @@
 
 @font-face {
     font-family: museosansrounded;
-    src: url(https://d7mj4aqfscim2.cloudfront.net/proxy/fonts/museo/museosansrounded-500-webfont.woff);
+    src: url(https://d7mj4aqfscim2.cloudfront.net/proxy/fonts/museo/museosansrounded-700-webfont.woff);
     font-weight: bold;
 }
 
@@ -59,7 +59,7 @@ p {
 }
 
 .comp {
-    color: #1CB0F6
+    color: #72d2ff;
 }
 
 .neg {
