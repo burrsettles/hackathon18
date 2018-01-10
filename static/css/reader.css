@@ -38,6 +38,23 @@
     color: #1CB0F6
 }
 
+.comp_main {
+    color: #1CB0F6;
+    font-weight: bold;
+}
+
+.comp {
+    color: #1CB0F6
+}
+
+.neg {
+    color: #D33131
+}
+
+.aux {
+    color: #BFF199
+}
+
 /* Input box */
 
 .text-input {

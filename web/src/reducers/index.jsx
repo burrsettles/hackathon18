@@ -12,7 +12,6 @@ function parseSentence (sentence) {
       wordType: word.arcs.length > 0 ? 'MAIN' : null,
       edges: word.arcs}
   });
-  console.log(sentence)
   return sentence
 }
 
@@ -33,7 +32,7 @@ export default (state=initialState, action) => {
       }
       break;
     case "CLICK_WORD":
-      var sentences = state.sentences
+      var sentences = state.sentences;
       sentences.forEach(sentence => {
         sentence.forEach(word => {
           if (word['wordType'] != 'MAIN') {
@@ -41,10 +40,9 @@ export default (state=initialState, action) => {
           }
         })
       })
-      var sentence = sentences[action.sentenceIndex]
-      console.log(sentence)
+      var sentence = sentences[action.sentenceIndex];
       sentence[action.wordIndex].edges.forEach(edge => {
-        for (var i = edge['span'][0]; i < edge['span'][1]; i++) {
+        for (let i = edge['span'][0]; i < edge['span'][1]; i++) {
           sentence[i]['wordType'] = edge['type']
         }
       });
@@ -52,6 +50,11 @@ export default (state=initialState, action) => {
         sentences: sentences,
         sentenceInFocusIndex: action.sentenceIndex
       };
+    case "FOCUS_SENTENCE":
+      return {
+        sentences: state.sentences,
+        sentenceInFocusIndex: action.sentenceIndex
+      }
     default: return initialState;
   }
 }

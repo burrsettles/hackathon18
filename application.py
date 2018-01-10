@@ -31,11 +31,11 @@ def load_text():
             'results': [
                 [
                     {
-                        'text': 'Edward',
+                        'text': 'Edward ',
                         'arcs': []
                     },
                     {
-                        'text': 'gave',
+                        'text': 'gave ',
                         'arcs': [
                             {
                                 'type': "SUBJ",
@@ -48,15 +48,15 @@ def load_text():
                         ]
                     },
                     {
-                        'text': 'a',
+                        'text': 'a ',
                         'arcs': []
                     },
                     {
-                        'text': 'gift',
+                        'text': 'gift ',
                         'arcs': []
                     },
                     {
-                        'text': 'to',
+                        'text': 'to ',
                         'arcs': []
                     },
                     {
@@ -64,17 +64,17 @@ def load_text():
                         'arcs': []
                     },
                     {
-                        'text': '.',
+                        'text': '. ',
                         'arcs': []
                     },
                 ],
                 [
                     {
-                        'text': 'This',
+                        'text': 'This ',
                         'arcs': []
                     },
                     {
-                        'text': 'movie',
+                        'text': 'movie ',
                         'arcs': []
                     },
                     {
@@ -85,7 +85,11 @@ def load_text():
                                 'span': [1, 2]
                             },
                         ]
-                    }
+                    },
+                    {
+                        'text': '.',
+                        'arcs': []
+                    },
                 ],
             ]
         }

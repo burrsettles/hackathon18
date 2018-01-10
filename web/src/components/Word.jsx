@@ -31,9 +31,14 @@ class Word extends Component {
 
   render() {
     var className = this.getClassName(this.props.wordType)
+    var word = this.props.wordText.trim()
+    var followingWhitespace = Array(this.props.wordText.length - word.length + 1).join(' ')
     return (
-      <span className={className} onClick={() => this.onClickWord() }>
-        {this.props.wordText}
+      <span onClick={() => this.onClickWord()}>
+        <span className={className}>
+          {word}
+        </span>
+        {followingWhitespace}
       </span>
     )
   }
