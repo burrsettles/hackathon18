@@ -116,6 +116,10 @@ p {
     float: right;
 }
 
+#generate-button.loading {
+    background-color: #CFCFCF;
+}
+
 /* Background*/
 
 html {

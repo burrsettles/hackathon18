@@ -5,7 +5,11 @@ import { postText } from 'actions'
 
 
 // Properties
-
+const mapStateToProps = (state, ownProps) => {
+  return {
+    isLoading: state.isLoading,
+  };
+};
 
 const mapDispatchToProps = dispatch => ({
   onPostText: (text, lang) => dispatch(postText(text, lang))
@@ -61,7 +65,9 @@ class Input extends Component {
                 <option value="fr">French</option>
                 <option value="es">Spanish</option>
               </select>
-              <button id="generate-button" onClick={this.handleGenerateClick}>
+              <button className={this.props.isLoading ? 'loading' : null}
+                      id="generate-button"
+                      onClick={this.handleGenerateClick}>
                 GENERATE
               </button>
             </div>
@@ -73,4 +79,4 @@ class Input extends Component {
 }
 
 //export default connect((state, ownProps) => ownProps, () => ({}))(ReaderBody)
-export default connect((state, ownProps) => ownProps, mapDispatchToProps)(Input)
+export default connect(mapStateToProps, mapDispatchToProps)(Input)

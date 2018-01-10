@@ -17,6 +17,9 @@ export function loadPage() {
 
 export function postText(text, language) {
   return function (dispatch) {
+    dispatch({
+      type: "POST_TEXT"
+    })
     api
       .postText(text, language)
       .then(response => {

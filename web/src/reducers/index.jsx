@@ -1,7 +1,8 @@
 const initialState = {
   sentences: [],
   sentenceInFocusIndex: null,
-  chunkInFocus: null
+  chunkInFocus: null,
+  isLoading: false
 };
 
 function parseSentence (sentence) {
@@ -21,8 +22,15 @@ function parseSentence (sentence) {
   return sentence
 }
 
-export default (state=initialState, action) => {
+export default (state = initialState, action) => {
   switch (action.type) {
+    case "POST_TEXT":
+      return {
+        sentences: state.sentences,
+        sentenceInFocusIndex: state.sentenceInFocusIndex,
+        chunkInFocus: state.chunkInFocus,
+        isLoading: true
+      }
     case "LOAD_PAGE":
       if (action.wordJson) {
         var sentences = [];
@@ -30,7 +38,8 @@ export default (state=initialState, action) => {
           sentences.push(parseSentence(sentence))
         });
         return {
-          sentences: sentences
+          sentences: sentences,
+          isLoading: false
         }
       }
       else {
@@ -55,13 +64,15 @@ export default (state=initialState, action) => {
       return {
         sentences: sentences,
         sentenceInFocusIndex: action.sentenceIndex,
-        chunkInFocus: state.chunkInFocus
+        chunkInFocus: state.chunkInFocus,
+        isLoading: state.isLoading
       };
     case "FOCUS_SENTENCE":
       return {
         sentences: state.sentences,
         sentenceInFocusIndex: action.sentenceIndex,
-        chunkInFocus: state.chunkInFocus
+        chunkInFocus: state.chunkInFocus,
+        isLoading: state.isLoading
       };
     case "FOCUS_CHUNK":
       return {
@@ -70,7 +81,8 @@ export default (state=initialState, action) => {
         chunkInFocus: {
           chunk: action.chunk,
           sentenceIndex: action.sentenceIndex
-        }
+        },
+        isLoading: state.isLoading
       };
     default: return initialState;
   }
