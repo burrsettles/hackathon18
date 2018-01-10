@@ -33,7 +33,7 @@ class ReaderBody extends Component {
         <Sentence
               words={sentence}
               index={index}
-        />
+        />{"\u00A0"}
       </span>)
 
     return (

@@ -9,7 +9,10 @@ const mapStateToProps = (state, ownProps) => {
   return {
     inFocus: state.sentenceInFocusIndex == ownProps.index,
     words: ownProps.words,
-    index: ownProps.index
+    index: ownProps.index,
+    chunk: state.chunkInFocus && state.chunkInFocus.sentenceIndex == ownProps.index
+      ? state.chunkInFocus.chunk
+      : [0,0]
   };
 };
 
@@ -24,23 +27,45 @@ class Sentence extends Component {
   }
 
   onMouseOver() {
-    console.log("mouseover")
     this.props.onMouseOver(this.props.index)
   }
 
+  findContainingChunk(index) {
+    var resultChunk = null
+    this.props.words.chunks.forEach((chunk) => {
+      if (index >= chunk[0] && index <= chunk[1]) {
+        resultChunk = chunk
+      }
+    });
+    return resultChunk
+  }
+
   render() {
-    const wordComponents = this.props.words.map(word =>
-        <Word
-              wordText={word.text}
-              wordType={word.wordType}
-              wordIndex={word.index}
-              sentenceIndex={this.props.index}
-        />)
+
+    var chunk = this.props.chunk
+    const wordComponents = this.props.words.tokens.map((word) => {
+      return <Word
+        wordText={word.text}
+        wordType={word.wordType}
+        wordIndex={word.index}
+        sentenceIndex={this.props.index}
+        chunk={this.findContainingChunk(word.index)}
+      />
+    })
+
+    var beforeChunkWords = wordComponents.slice(0, chunk[0])
+    var chunkWords =
+      <span className="chunkInFocus">
+        {wordComponents.slice(chunk[0], chunk[1])}
+      </span>
+    var afterChunkWords = wordComponents.slice(chunk[1], wordComponents.length)
 
     return (
-      <span className={this.props.inFocus ? 'inFocus' : null}
+      <span className={this.props.inFocus ? 'sentenceInFocus' : null}
             onMouseOver={() => this.onMouseOver()}>
-        {wordComponents}
+        {
+          beforeChunkWords.concat(chunkWords).concat(afterChunkWords)
+        }
       </span>
     )
   }

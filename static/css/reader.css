@@ -18,8 +18,13 @@
 
 /* Reader */
 
-.inFocus {
+.sentenceInFocus {
     background-color: #ffffff;
+}
+
+.chunkInFocus {
+    border-bottom: 2px solid #AFAFAF;
+    padding-bottom: 1px;
 }
 
 #readerBody {
@@ -32,10 +37,12 @@
     color: #7AC70C;
     font-weight: bold;
     text-decoration: underline dotted;
+    cursor: pointer;
 }
 
 p {
-    font-size: 24px;
+    font-size: 2em;
+    line-height: 2em;
 }
 
 .subj {
@@ -60,7 +67,7 @@ p {
 }
 
 .aux {
-    color: #BFF199
+    color: #8EE000
 }
 
 /* Input box */

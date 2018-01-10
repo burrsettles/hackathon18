@@ -44,3 +44,11 @@ export function focusSentence(sentenceIndex) {
     sentenceIndex: sentenceIndex
   }
 }
+
+export function focusChunk(chunk, sentenceIndex) {
+  return {
+    type: "FOCUS_CHUNK",
+    chunk: chunk,
+    sentenceIndex: sentenceIndex
+  }
+}
