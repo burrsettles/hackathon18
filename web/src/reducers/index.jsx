@@ -4,13 +4,15 @@ const initialState = {
 };
 
 function parseSentence (sentence) {
-  sentence = sentence.map((word, index) => {
+  console.log(sentence['tokens'])
+  sentence = sentence['tokens'].map((word, index) => {
+    var arcs = word.arcs ? word.arcs : []
     return {
       text: word.text,
       index: index,
       pos: word.pos,
-      wordType: word.arcs.length > 0 ? 'MAIN' : null,
-      edges: word.arcs}
+      wordType: arcs.length > 0 ? 'MAIN' : null,
+      edges: arcs}
   });
   return sentence
 }
