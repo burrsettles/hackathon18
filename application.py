@@ -1,5 +1,7 @@
 from flask import Flask, render_template, jsonify, request
 
+from parse import text2chunks
+
 application = Flask(__name__)
 
 
@@ -14,14 +16,8 @@ def post_text():
 
     language = body.get('language')
     text = body.get('text')
-    return jsonify(
-        {
-            'results': [[
-                {'text': language, 'arcs': []},
-                {'text': text, 'arcs': []}
-            ]]
-        }
-    )
+    response = text2chunks(text, language)
+    return jsonify(response)
 
 
 @application.route('/api/load_text', methods=['GET'])
